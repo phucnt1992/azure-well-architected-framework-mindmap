@@ -1,0 +1,15 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "ignorePaths": [
+        ".devcontainer",
+        ".vscode",
+        "package*.json",
+    ],
+    "words": [
+        "devcontainer",
+        "markmap",
+        "mindmap",
+        "usefixtures",
+        "xmlcharrefreplace"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "devDependencies": {
+        "@commitlint/cli": "^18.4.3",
+        "@commitlint/config-conventional": "^18.4.3",
+        "husky": "^8.0.0",
+        "markdownlint-cli": "^0.37.0"
+    },
+    "scripts": {
+        "prepare": "husky install"
+    }
+}

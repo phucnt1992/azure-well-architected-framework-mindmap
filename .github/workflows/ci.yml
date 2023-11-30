@@ -1,0 +1,36 @@
+name: CI pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  quality-check:
+    name: Quality check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+      - name: Install dependencies
+        run: make init
+      - name: Lint code
+        run: make lint
+      - name: Run tests
+        run: make test-coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        continue-on-error: true
+        with:
+          file: coverage.xml
+          fail_ci_if_error: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+

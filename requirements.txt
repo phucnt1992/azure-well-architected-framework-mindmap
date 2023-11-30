@@ -1,0 +1,9 @@
+# deps
+flake8
+black
+pytest
+pytest-cov
+isort
+
+# deps
+pyyaml
