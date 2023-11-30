@@ -3,8 +3,8 @@
 This is a mindmap generator of the [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/).
 
 ![Code coverage](https://img.shields.io/codecov/c/github/phucnt1992/azure-well-architected-framework-mindmap)
-![CI workflow](https://img.shields.io/github/actions/workflow/status/phucnt1992/azure-well-architected-framework-mindmap/ci?label=CI)
-![Deploy workflow](https://img.shields.io/github/actions/workflow/status/phucnt1992/azure-well-architected-framework-mindmap/cd?label=CD)
+![CI workflow](https://img.shields.io/github/actions/workflow/status/phucnt1992/azure-well-architected-framework-mindmap/ci.yml?label=CI)
+![Deploy workflow](https://img.shields.io/github/actions/workflow/status/phucnt1992/azure-well-architected-framework-mindmap/cd.yml?label=CD)
 
 ## Usage
 
