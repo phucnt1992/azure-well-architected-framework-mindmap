@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# linting python and markdown
+make lint
+
+# format python files
+git diff --name-only --cached | xargs ls -1 2>/dev/null | grep '\.py$' | xargs black

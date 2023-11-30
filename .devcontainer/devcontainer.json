@@ -1,0 +1,34 @@
+{
+    "image": "mcr.microsoft.com/vscode/devcontainers/base",
+    "features": {
+        "ghcr.io/devcontainers/features/git": {
+            "ppa": true
+        },
+        "ghcr.io/devcontainers/features/python": {
+            "optimize": true,
+            "version": "3.12",
+            "installTools": true
+        },
+        "ghcr.io/jungaretti/features/make": {},
+        "ghcr.io/devcontainers/features/node": {
+            "nodeGypDependencies": true,
+            "version": "lts"
+        }
+    },
+    "postCreateCommand": "make init",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "DavidAnson.vscode-markdownlint",
+                "EditorConfig.EditorConfig",
+                "gera2ld.markmap-vscode",
+                "GitHub.vscode-github-actions",
+                "hbenl.vscode-test-explorer",
+                "ms-python.black-formatter",
+                "ms-python.flake8",
+                "ms-python.python",
+                "streetsidesoftware.code-spell-checker"
+            ]
+        }
+    }
+}
