@@ -15,6 +15,12 @@ def read_md_file(md_file: str) -> Array[str]:
     )
 
 
+def remove_chars(s: str) -> str:
+    chars_to_remove = "'?():"
+    table = str.maketrans("", "", chars_to_remove)
+    return s.translate(table)
+
+
 class Item:
     NAME_FIELD = "name"
     HREF_FIELD = "href"
@@ -134,6 +140,10 @@ class TableOfContent:
 
     def __format_to_md_link(self, href: str, header: str, level: int) -> str:
         stripped_header = header.lstrip("#").strip()
-        header_id = f"#{stripped_header.lower().replace(' ', '-')}" if level > 1 else ""
+        header_id = (
+            f"#{remove_chars(stripped_header.lower().replace(' ', '-'))}"
+            if level > 1
+            else ""
+        )
 
         return f" [{stripped_header}]({self.__root_uri}{href.removesuffix('.md')}{header_id})"
