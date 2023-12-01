@@ -5,6 +5,12 @@ from mindmap.utils import load_indexes, read_yml_file, write_md_file
 
 SCAN_DIR = "well-architected"
 OUTPUT_DIR = "output"
+META_HEADER = """---
+markmap:
+  colorFreezeLevel: 2
+  maxWidth: 300
+  initialExpandLevel: 2
+---"""
 
 if __name__ == "__main__":
     cwd_dir = os.getcwd()
@@ -27,4 +33,4 @@ if __name__ == "__main__":
 
         output_dir = os.path.join(cwd_dir, OUTPUT_DIR)
         readme_file = os.path.join(output_dir, f"MINDMAP-{idx+1}.md")
-        write_md_file(result, readme_file)
+        write_md_file(result, readme_file, META_HEADER)
