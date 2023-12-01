@@ -9,12 +9,15 @@ PYTHON_VENV_BIN := .venv/bin/
 help:
 	@echo "Usage: make <target>"
 	@echo "Targets:"
-	@echo "  init     - Initialize the project."
-	@echo "  run      - Run to create markdown mindmap."
-	@echo "  generate - Run to create sitemap HTML."
-	@echo "  clean    - Clean the project."
-	@echo "  test     - Test the project."
-	@echo "  help     - Show this help message."
+	@echo "  init           - Initialize the project."
+	@echo "  clone-docs     - Clone the docs repository."
+	@echo "  run            - Run to create markdown mindmap."
+	@echo "  generate       - Run to create sitemap HTML."
+	@echo "  clean          - Clean the project."
+	@echo "  test           - Test the project."
+	@echo "  test-coverage  - Test with coverage report the project."
+	@echo "  lint           - Linting the project"
+	@echo "  help           - Show this help message."
 
 .PHONY: init
 init:
@@ -25,10 +28,15 @@ init:
 	@npm install && npm run prepare
 	@echo "Done."
 
+.PHONY: clone-docs
+clone-docs:
+	@echo "Cloning..."
+	@git clone https://github.com/MicrosoftDocs/well-architected.git --single-branch --branch main --depth 1
+	@echo "Done."
+
 .PHONY: run
 run:
 	@echo "Running..."
-	@git clone https://github.com/MicrosoftDocs/well-architected.git
 	@${PYTHON_VENV_BIN}/python3 main.py
 	@echo "Done."
 

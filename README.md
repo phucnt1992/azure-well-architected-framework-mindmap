@@ -6,6 +6,11 @@ This is a mindmap generator of the [Azure Well-Architected Framework](https://le
 ![CI workflow](https://img.shields.io/github/actions/workflow/status/phucnt1992/azure-well-architected-framework-mindmap/ci.yml?label=CI)
 ![Deploy workflow](https://img.shields.io/github/actions/workflow/status/phucnt1992/azure-well-architected-framework-mindmap/cd.yml?label=CD)
 
+## Requirements
+
+- [Python 3.12](https://www.python.org/downloads/)
+- [NodeJS LTS](https://nodejs.org/)
+
 ## Usage
 
 ```bash
@@ -16,9 +21,11 @@ make init
 make test
 
 # Generate the mindmap (in the `output` folder)
-# Markdown only
+# 1. Clone docs from the official repo
+make clone-docs
+# 2. Markdown format only
 make run
-# Sitemap in HTML
+# 3. HTML format
 make generate
 
 # Clean all workspace

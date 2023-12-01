@@ -40,6 +40,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: make init
+      - name: Clone docs repo
+        run: make clond-docs
       - name: Generate static content
         run: make generate
       - name: Setup Pages

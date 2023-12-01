@@ -26,9 +26,12 @@ def read_yml_file(index_file: str) -> dict:
         return yaml.safe_load(file)
 
 
-def write_md_file(content: str, file: str) -> str:
+def write_md_file(content: str, file: str, meta: str = None) -> str:
     """Write the content to a markdown file."""
     os.makedirs(os.path.dirname(file), exist_ok=True)
 
     with open(file, "w", encoding="utf-8") as output_file:
+        if meta is not None:
+            output_file.write(meta)
+            output_file.write("\n\n")
         output_file.write(content)

@@ -10,7 +10,9 @@ def read_md_file(md_file: str) -> Array[str]:
 
     headers = filter(lambda line: line.startswith("#"), lines)
 
-    return list(map(lambda line: line.replace("\n", ""), headers))
+    return list(
+        map(lambda line: line.replace(TableOfContent.NEW_LINE_CHAR, ""), headers)
+    )
 
 
 class Item:
@@ -42,6 +44,10 @@ class Item:
 
 
 class TableOfContent:
+    MAX_HEADER_LEVEL = 6
+    INDENT_SIZE = 2
+    NEW_LINE_CHAR = "\n"
+
     __root: Item
     __root_dir: str
     __root_uri: str
@@ -55,7 +61,7 @@ class TableOfContent:
         return self.__str_recursive(self.__root)
 
     def __str_recursive(self, item: Item, level: int = 0) -> str:
-        result = f"{'  ' * level}- {item.name}\n"
+        result = f"{'  ' * level}- {item.name}{self.NEW_LINE_CHAR}"
         for child in item.children:
             result += self.__str_recursive(child, level + 1)
 
@@ -80,7 +86,7 @@ class TableOfContent:
         with StringIO() as text:
             result = self.__to_mindmap_recursive(self.__root, text, root_level)
             # Remove the last newline
-            return result.getvalue()[::-1].replace("\n", "", 1)[::-1]
+            return result.getvalue()[::-1].replace(self.NEW_LINE_CHAR, "", 1)[::-1]
 
     def __to_mindmap_recursive(self, item: Item, text: StringIO, level: int = 0) -> str:
         if (
@@ -89,18 +95,31 @@ class TableOfContent:
             or item.href.endswith(".yaml")
         ):
             lint_name = item.name if item.name.startswith("#") else f" {item.name}"
-            text.write(f"{self.__fill_with_hash(level + 1)}{lint_name}\n")
-            text.write("\n")
+            text.write(
+                f"{self.__fill_with_hash(level + 1)}{lint_name}{self.NEW_LINE_CHAR}"
+            )
+            text.write(self.NEW_LINE_CHAR)
 
         if item.href is not None and item.href.endswith(".md"):
             md_file = os.path.join(self.__root_dir, item.href)
             headers = read_md_file(md_file)
             for header in headers:
                 local_level = header.count("#")
-                text.write(
-                    f"{self.__fill_with_hash(level + local_level)}{self.__format_to_md_link(item.href, header, local_level)}\n"
-                )
-                text.write("\n")
+                total_level = level + local_level
+                link_text = self.__format_to_md_link(item.href, header, local_level)
+
+                # Maximum Header Level is 6 in Markdown
+                if total_level > self.MAX_HEADER_LEVEL:
+                    text.write(
+                        f"{self.__fill_with_space(total_level - self.MAX_HEADER_LEVEL - 1)}-{link_text}{self.NEW_LINE_CHAR}"
+                    )
+                    text.write(self.NEW_LINE_CHAR)
+
+                else:
+                    text.write(
+                        f"{self.__fill_with_hash(total_level)}{link_text}{self.NEW_LINE_CHAR}"
+                    )
+                    text.write(self.NEW_LINE_CHAR)
 
         for child in item.children:
             self.__to_mindmap_recursive(child, text, level + 1)
@@ -109,6 +128,9 @@ class TableOfContent:
 
     def __fill_with_hash(self, length: int) -> str:
         return "#" * length
+
+    def __fill_with_space(self, length: int) -> str:
+        return " " * length * self.INDENT_SIZE
 
     def __format_to_md_link(self, href: str, header: str, level: int) -> str:
         stripped_header = header.lstrip("#").strip()
