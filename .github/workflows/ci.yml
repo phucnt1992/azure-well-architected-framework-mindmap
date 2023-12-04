@@ -22,11 +22,11 @@ jobs:
           node-version: "latest"
           cache: npm
       - name: Install dependencies
-        run: make init
+        run: task init
       - name: Lint code
-        run: make lint
+        run: task lint
       - name: Run tests
-        run: make test-coverage
+        run: task test-coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         continue-on-error: true
