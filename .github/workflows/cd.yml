@@ -27,19 +27,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-          cache: pip
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "latest"
-          cache: npm
-      - name: Install dependencies
-        run: task init
+      - name: Setup prerequisites
+        uses: ./github/actions/setup-prerequisites
       - name: Clone docs repo
         run: task clone-docs
       - name: Generate static content
