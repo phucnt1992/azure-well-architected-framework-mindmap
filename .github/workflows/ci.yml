@@ -10,6 +10,8 @@ jobs:
     name: Quality check
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup prerequisites
         uses: ./github/setup-prerequisites
       - name: Lint code

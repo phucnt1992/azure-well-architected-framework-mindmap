@@ -3,8 +3,6 @@ name: Setup prerequisites actions
 runs:
   using: "composite"
   steps:
-    - name: Checkout
-      uses: actions/checkout@v4
     - name: Set up Taskfile
       uses: arduino/setup-task@v1
     - name: Set up Python
