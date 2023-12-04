@@ -6,7 +6,7 @@ silent: true
 
 vars:
   PYTHON_VENV_BIN: ".venv/bin/"
-  CLEAN_TARGETS: __pycache__ .pytest_cache well-architected .venv output .coverage coverage.xml node_modules
+  CLEAN_TARGETS: __pycache__ .pytest_cache .venv output .coverage coverage.xml node_modules
 
 tasks:
   init:
@@ -20,11 +20,13 @@ tasks:
 
   clean:
     desc: Clean the project
-    cmd: rm -rf {{.CLEAN_TARGETS}}
+    cmds:
+      - rm -rf {{.CLEAN_TARGETS}}
+      - git submodule deinit --all -f
 
   clone-docs:
     desc: Clone the docs
-    cmd: git clone https://github.com/MicrosoftDocs/well-architected.git --single-branch --branch main --depth 1
+    cmd: git submodule update --init --recursive
 
   run:
     desc: Run the app
@@ -55,6 +57,11 @@ tasks:
       - "{{.PYTHON_VENV_BIN}}/flake8"
       - echo "Running markdownlint..."
       - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output .
+
+  verify-docs:
+    desc: Verify the docs commit
+    cmds:
+      - git submodule foreach --recursive git rev-list --after="24 hours" --count HEAD | echo "commit=$(grep -o '[0-9]*')"
 
   default:
     desc: Show this help

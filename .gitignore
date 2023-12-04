@@ -397,9 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Clone Repo
-well-architected
-
 # Output
 output
 

@@ -1,4 +1,5 @@
 name: Setup prerequisites actions
+description: "Setup prerequisites for the CI/CD pipelines"
 
 runs:
   using: "composite"
@@ -16,4 +17,5 @@ runs:
         node-version: "latest"
         cache: npm
     - name: Install dependencies
+      shell: bash
       run: task init
