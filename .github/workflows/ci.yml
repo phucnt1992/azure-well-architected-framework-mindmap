@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup prerequisites
-        uses: ./github/actions/setup-prerequisites
+        uses: ./github/setup-prerequisites
       - name: Lint code
         run: task lint
       - name: Run tests
