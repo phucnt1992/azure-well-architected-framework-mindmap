@@ -1,0 +1,4 @@
+[submodule "well-architected"]
+	path = well-architected
+	url = https://github.com/MicrosoftDocs/well-architected.git
+	branch = main

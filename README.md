@@ -1,35 +1,40 @@
 # Azure Well-Architected Framework Mindmap
 
-This is a mindmap generator of the [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/).
-
 ![Code coverage](https://img.shields.io/codecov/c/github/phucnt1992/azure-well-architected-framework-mindmap)
 [![CI pipeline](https://github.com/phucnt1992/azure-well-architected-framework-mindmap/actions/workflows/ci.yml/badge.svg)](https://github.com/phucnt1992/azure-well-architected-framework-mindmap/actions/workflows/ci.yml)
 [![CD pipeline](https://github.com/phucnt1992/azure-well-architected-framework-mindmap/actions/workflows/cd.yml/badge.svg)](https://github.com/phucnt1992/azure-well-architected-framework-mindmap/actions/workflows/cd.yml)
+
+This is a mindmap generator of the [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/).
+
+Published page: 🗺️ [Mind map](https://phucnt1992.github.io/azure-well-architected-framework-mindmap/)
+
+![Azure Well-Architected Framework Mind map](docs/image.png)
 
 ## Requirements
 
 - [Python 3.12](https://www.python.org/downloads/)
 - [NodeJS LTS](https://nodejs.org/)
+- [Taskfile](https://taskfile.dev/)
 
 ## Usage
 
 ```bash
 # Install dependencies
-make init
+task init
 
 # Run tests
-make test
+task test
 
 # Generate the mindmap (in the `output` folder)
 # 1. Clone docs from the official repo
-make clone-docs
+task clone-docs
 # 2. Markdown format only
-make run
+task run
 # 3. HTML format
-make generate
+task generate
 
 # Clean all workspace
-make clean
+task clean
 ```
 
 ## License

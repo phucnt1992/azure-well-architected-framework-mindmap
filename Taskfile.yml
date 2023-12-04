@@ -1,0 +1,69 @@
+# https://taskfile.dev
+
+version: "3"
+
+silent: true
+
+vars:
+  PYTHON_VENV_BIN: ".venv/bin/"
+  CLEAN_TARGETS: __pycache__ .pytest_cache .venv output .coverage coverage.xml node_modules
+
+tasks:
+  init:
+    desc: Initialize the project
+    cmds:
+      - python3 -m venv .venv
+      - "{{.PYTHON_VENV_BIN}}/pip3 install --upgrade pip"
+      - "{{.PYTHON_VENV_BIN}}/pip3 install -r requirements.txt"
+      - npm install
+      - npm run prepare
+
+  clean:
+    desc: Clean the project
+    cmds:
+      - rm -rf {{.CLEAN_TARGETS}}
+      - git submodule deinit --all -f
+
+  clone-docs:
+    desc: Clone the docs
+    cmd: git submodule update --init --recursive
+
+  run:
+    desc: Run the app
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/python3 main.py"
+
+  generate:
+    desc: Generate the output
+    deps:
+      - run
+    cmds:
+      - npx --yes markmap-cli ./output/MINDMAP-1.md -o ./output/index.html
+
+  test:
+    desc: Run the tests
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest -v"
+
+  test-coverage:
+    desc: Run the tests with coverage
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest --doctest-modules --cov=mindmap --cov-report=xml --cov-report=html"
+
+  lint:
+    desc: Run the linter
+    cmds:
+      - echo "Running flake8..."
+      - "{{.PYTHON_VENV_BIN}}/flake8"
+      - echo "Running markdownlint..."
+      - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output .
+
+  verify-docs:
+    desc: Verify the docs commit
+    cmds:
+      - git submodule foreach --recursive git rev-list --after="24 hours" --count HEAD | echo "commit=$(grep -o '[0-9]*')"
+
+  default:
+    desc: Show this help
+    cmds:
+      - task --list

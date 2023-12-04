@@ -1,0 +1,21 @@
+name: Setup prerequisites actions
+description: "Setup prerequisites for the CI/CD pipelines"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Taskfile
+      uses: arduino/setup-task@v1
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+        cache: pip
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: "latest"
+        cache: npm
+    - name: Install dependencies
+      shell: bash
+      run: task init

@@ -1,0 +1,29 @@
+name: Check docs for updates
+
+on:
+  schedule:
+    - cron: "12 00 * * *" # Runs at 12:00 UTC every day
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check Azure Well-Architected Framework docs for updates
+        id: verify-docs
+        run: task verify-docs >> "$GITHUB_OUTPUT"
+      - name: Trigger CD workflow
+        if: ${{ steps.verify-docs.outputs.commit != '0' }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            github.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'cd.yml',
+              ref: "main"
+            })

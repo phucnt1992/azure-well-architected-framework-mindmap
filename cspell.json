@@ -3,13 +3,21 @@
     "ignorePaths": [
         ".devcontainer",
         ".vscode",
-        "package*.json",
+        "package*.json"
     ],
     "words": [
+        "cmds",
+        "deinit",
         "devcontainer",
+        "doctest",
+        "markdownlint",
         "markmap",
         "mindmap",
+        "pycache",
+        "pytest",
+        "Taskfile",
         "usefixtures",
+        "venv",
         "xmlcharrefreplace"
     ]
 }
