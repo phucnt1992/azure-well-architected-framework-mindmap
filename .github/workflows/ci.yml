@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup prerequisites
-        uses: ./github/setup-prerequisites
+        uses: ./.github/actions/setup-prerequisites
       - name: Lint code
         run: task lint
       - name: Run tests

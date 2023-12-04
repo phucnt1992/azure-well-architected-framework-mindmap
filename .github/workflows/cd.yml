@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup prerequisites
-        uses: ./github/setup-prerequisites
+        uses: ./.github/actions/setup-prerequisites
       - name: Clone docs repo
         run: task clone-docs
       - name: Generate static content
