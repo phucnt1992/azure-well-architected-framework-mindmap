@@ -1,4 +1,5 @@
 {
+    "name": "Azure Well-Architected Framework Mind Map",
     "image": "mcr.microsoft.com/vscode/devcontainers/base",
     "features": {
         "ghcr.io/devcontainers/features/git": {
