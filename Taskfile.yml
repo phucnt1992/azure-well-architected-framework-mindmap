@@ -61,6 +61,7 @@ tasks:
   verify-docs:
     desc: Verify the docs commit
     cmds:
+      - git submodule foreach --recursive git pull origin main
       - git submodule foreach --recursive git rev-list --after="24 hours" --count HEAD | echo "commit=$(grep -o '[0-9]*')"
 
   default:
