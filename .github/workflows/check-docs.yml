@@ -18,11 +18,9 @@ jobs:
         run: task pull-docs
       - name: Check Azure Well-Architected Framework docs for updates
         id: verify-docs
-        run: echo "commit=$(task verify-docs)" >> "$GITHUB_OUTPUT"
-      - name: Check commit output
-        run: echo "Number of commit is ${{ steps.verify-docs.outputs.commit }}"
+        run: echo ::set-output name=commit::$(task verify-docs)
       - name: Trigger CD workflow
-        if: ${{ steps.verify-docs.outputs.commit != '0' }}
+        if: steps.verify-docs.outputs.commit != '0'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
