@@ -58,10 +58,14 @@ tasks:
       - echo "Running markdownlint..."
       - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output .
 
+  pull-docs:
+    desc: Pull the docs
+    cmd: git submodule foreach --recursive git pull origin main
+
   verify-docs:
     desc: Verify the docs commit
     cmds:
-      - git submodule foreach --recursive git rev-list --after="24 hours" --count HEAD | echo "commit=$(grep -o '[0-9]*')"
+      - git submodule foreach --recursive git rev-list --after="24 hours" --count HEAD | echo "$(grep -o '[0-9]*')"
 
   default:
     desc: Show this help
