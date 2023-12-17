@@ -15,8 +15,6 @@ def test_load_indexes_with_empty_dir_should_return_empty_exception():
 
 def test_load_indexes_with_dir_with_index_yml_should_return_index_yml(fixture_dir):
     # Arrange
-    test_dir = os.path.dirname(os.path.realpath(__file__))
-    fixture_dir = os.path.join(test_dir, "fixtures")
 
     # Act
     actual_result = load_indexes(fixture_dir, "test_index.yml")

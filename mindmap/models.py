@@ -1,9 +1,8 @@
 import os
-from ctypes import Array
 from io import StringIO
 
 
-def read_md_file(md_file: str) -> Array[str]:
+def read_md_file(md_file: str) -> list[str]:
     """Read the markdown file and return the content."""
     with open(md_file, "r") as file:
         lines = file.readlines()
@@ -28,7 +27,7 @@ class Item:
 
     name: str
     parent: "Item"
-    children: Array["Item"]
+    children: list["Item"]
     href: str
 
     def __init__(
@@ -77,7 +76,7 @@ class TableOfContent:
         self.__root = Item(data[Item.NAME_FIELD], href=data.get(Item.HREF_FIELD, None))
         self.__convert_items(data[Item.ITEMS_FIELD], self.__root)
 
-    def __convert_items(self, items: Array[dict], parent: Item) -> None:
+    def __convert_items(self, items: list[dict], parent: Item) -> None:
         for item in items:
             new_item = Item(
                 item.get(Item.NAME_FIELD),
