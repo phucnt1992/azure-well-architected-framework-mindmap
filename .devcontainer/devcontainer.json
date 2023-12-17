@@ -14,7 +14,11 @@
             "nodeGypDependencies": true,
             "version": "lts"
         },
-        "ghcr.io/audacioustux/devcontainers/taskfile": {}
+        "ghcr.io/audacioustux/devcontainers/taskfile": {},
+        "ghcr.io/devcontainers/features/java": {
+            "version": "latest",
+            "jdkDistro": "ms"
+        }
     },
     "postCreateCommand": "task init",
     "customizations": {
@@ -30,7 +34,8 @@
                 "ms-python.python",
                 "streetsidesoftware.code-spell-checker",
                 "task.vscode-task",
-                "redhat.vscode-yaml"
+                "redhat.vscode-yaml",
+                "SonarSource.sonarlint-vscode"
             ]
         }
     }

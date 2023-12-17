@@ -1,16 +1,17 @@
 import os
-from ctypes import Array
 from functools import reduce
 
 import yaml
 
 
-def load_indexes(path: str, file_name: str = "toc.yml") -> Array[str]:
+def load_indexes(path: str, file_name: str = "toc.yml") -> list[str]:
     """Load all index.yml files in the given path."""
     index_files = []
     for dir_path, _, files in os.walk(path):
         reduce(
-            lambda acc, file: acc.append((dir_path, os.path.join(dir_path, file)))
+            lambda acc, file, local_dir_path=dir_path: acc.append(
+                (local_dir_path, os.path.join(local_dir_path, file))
+            )
             if file == file_name
             else acc,
             files,

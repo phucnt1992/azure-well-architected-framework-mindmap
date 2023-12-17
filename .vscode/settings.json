@@ -15,5 +15,9 @@
         "-vv"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "phucnt1992",
+        "projectKey": "phucnt1992_azure-well-architected-framework-mindmap"
+    }
 }
