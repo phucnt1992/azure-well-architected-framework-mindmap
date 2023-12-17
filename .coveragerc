@@ -1,2 +1,7 @@
 [run]
 omit = tests/*
+
+[coverage:run]
+relative_files = True
+source = mindmap/
+branch = True
