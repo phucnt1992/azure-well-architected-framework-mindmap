@@ -9,7 +9,7 @@ META_HEADER = """---
 markmap:
   colorFreezeLevel: 2
   maxWidth: 300
-  initialExpandLevel: 2
+  initialExpandLevel: 3
 ---"""
 
 if __name__ == "__main__":
