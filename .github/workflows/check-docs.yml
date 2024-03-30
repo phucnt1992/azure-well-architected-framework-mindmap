@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up Taskfile
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
       - name: Pull latest docs
         run: task pull-docs
       - name: Check Azure Well-Architected Framework docs for updates
