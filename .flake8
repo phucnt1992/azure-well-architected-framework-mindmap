@@ -3,4 +3,5 @@ exclude =
     .git,
     __pycache__
     .venv
+    well-architected
 max-line-length = 200

@@ -1,0 +1,6 @@
+ignores:
+  - node_modules
+  - .venv
+  - well-architected
+  - .git
+  - __pycache__

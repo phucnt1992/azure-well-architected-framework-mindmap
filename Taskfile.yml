@@ -56,7 +56,7 @@ tasks:
       - echo "Running flake8..."
       - "{{.PYTHON_VENV_BIN}}/flake8"
       - echo "Running markdownlint..."
-      - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output .
+      - npx markdownlint-cli2 "**/*.md"
 
   pull-docs:
     desc: Pull the docs
