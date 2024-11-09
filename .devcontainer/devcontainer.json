@@ -1,42 +1,39 @@
 {
-    "name": "Azure Well-Architected Framework Mind Map",
-    "image": "mcr.microsoft.com/vscode/devcontainers/base",
-    "features": {
-        "ghcr.io/devcontainers/features/git": {
-            "ppa": true
-        },
-        "ghcr.io/devcontainers/features/python": {
-            "optimize": true,
-            "version": "3.12",
-            "installTools": true
-        },
-        "ghcr.io/devcontainers/features/node": {
-            "nodeGypDependencies": true,
-            "version": "lts"
-        },
-        "ghcr.io/audacioustux/devcontainers/taskfile": {},
-        "ghcr.io/devcontainers/features/java": {
-            "version": "latest",
-            "jdkDistro": "ms"
-        }
+  "name": "Azure Well-Architected Framework Mind Map",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:jammy",
+  "features": {
+    "ghcr.io/devcontainers/features/git": {
+      "ppa": true
     },
-    "postCreateCommand": "task init",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "DavidAnson.vscode-markdownlint",
-                "EditorConfig.EditorConfig",
-                "gera2ld.markmap-vscode",
-                "GitHub.vscode-github-actions",
-                "hbenl.vscode-test-explorer",
-                "ms-python.black-formatter",
-                "ms-python.flake8",
-                "ms-python.python",
-                "streetsidesoftware.code-spell-checker",
-                "task.vscode-task",
-                "redhat.vscode-yaml",
-                "SonarSource.sonarlint-vscode"
-            ]
-        }
+    "ghcr.io/devcontainers/features/python": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/node": {
+      "nodeGypDependencies": true,
+      "version": "lts"
+    },
+    "ghcr.io/audacioustux/devcontainers/taskfile": {},
+    "ghcr.io/devcontainers/features/java": {
+      "version": "17"
     }
+  },
+  "postCreateCommand": "task init",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "DavidAnson.vscode-markdownlint",
+        "EditorConfig.EditorConfig",
+        "gera2ld.markmap-vscode",
+        "GitHub.vscode-github-actions",
+        "hbenl.vscode-test-explorer",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-python.python",
+        "streetsidesoftware.code-spell-checker",
+        "task.vscode-task",
+        "redhat.vscode-yaml",
+        "SonarSource.sonarlint-vscode"
+      ]
+    }
+  }
 }

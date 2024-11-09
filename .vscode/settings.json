@@ -1,23 +1,23 @@
 {
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/__pycache__": true,
-        "**/.pytest_cache": true,
-        "**/node_modules": true,
-    },
-    "python.testing.pytestArgs": [
-        "tests",
-        "-vv"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "sonarlint.connectedMode.project": {
-        "connectionId": "phucnt1992",
-        "projectKey": "phucnt1992_azure-well-architected-framework-mindmap"
-    }
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/node_modules": true,
+  },
+  "python.testing.pytestArgs": [
+    "tests",
+    "-vv"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "sonarlint.connectedMode.project": {
+    "connectionId": "phucnt1992",
+    "projectKey": "phucnt1992_azure-well-architected-framework-mindmap"
+  }
 }
