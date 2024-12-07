@@ -1,13 +1,14 @@
 version: "3"
 
 vars:
-  PYTHON_VENV_BIN: ".venv/bin/"
+  PYTHON_VENV_BIN: "./.venv/bin/"
 
 tasks:
   init:
     desc: Initialize python virtual environment
     cmds:
-      - python3 -m venv .venv
+      - rm -rf ./.venv
+      - python3 -m venv ./.venv
       - "{{.PYTHON_VENV_BIN}}/pip3 install --upgrade pip"
       - "{{.PYTHON_VENV_BIN}}/pip3 install -r requirements.txt"
 
