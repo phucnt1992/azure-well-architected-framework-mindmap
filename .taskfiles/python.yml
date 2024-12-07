@@ -1,0 +1,32 @@
+version: "3"
+
+vars:
+  PYTHON_VENV_BIN: ".venv/bin/"
+
+tasks:
+  init:
+    desc: Initialize python virtual environment
+    cmds:
+      - python3 -m venv .venv
+      - "{{.PYTHON_VENV_BIN}}/pip3 install --upgrade pip"
+      - "{{.PYTHON_VENV_BIN}}/pip3 install -r requirements.txt"
+
+  run:
+    desc: Run the app
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/python3 main.py"
+
+  test:
+    desc: Run the tests
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest -v"
+
+  test-coverage:
+    desc: Run the tests with coverage
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest --doctest-modules --cov=mindmap --cov-report=xml --cov-report=html"
+
+  lint:
+    desc: Run the linter
+    cmds:
+      - "{{.PYTHON_VENV_BIN}}/flake8"

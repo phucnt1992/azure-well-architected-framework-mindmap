@@ -32,7 +32,7 @@ jobs:
       - name: Setup prerequisites
         uses: ./.github/actions/setup-prerequisites
       - name: Clone docs repo
-        run: task clone-docs
+        run: task git:clone-docs
       - name: Generate static content
         run: task generate
       - name: Setup Pages

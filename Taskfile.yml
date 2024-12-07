@@ -4,86 +4,41 @@ version: "3"
 
 silent: true
 
-vars:
-  PYTHON_VENV_BIN: ".venv/bin/"
-  CLEAN_TARGETS: __pycache__ .pytest_cache .venv output .coverage coverage.xml node_modules
+includes:
+  git: .taskfiles/git.yml
+  py: .taskfiles/python.yml
+  node: .taskfiles/node.yml
 
 tasks:
-  init:
-    desc: Initialize the project
-    cmds:
-      - python3 -m venv .venv
-      - "{{.PYTHON_VENV_BIN}}/pip3 install --upgrade pip"
-      - "{{.PYTHON_VENV_BIN}}/pip3 install -r requirements.txt"
-      - npm install
-      - npm run prepare
-
-  clean:
-    desc: Clean the project
-    cmds:
-      - rm -rf {{.CLEAN_TARGETS}}
-      - git submodule deinit --all -f
-
-  clean-docs:
-    desc: Clean the docs
-    cmds:
-      - rm -rf well-architected azure-docs
-
-  clone-docs:
-    desc: Clone the docs
-    deps:
-      - clean-docs
-    cmds:
-      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/well-architected.git
-      - cd well-architected && git sparse-checkout init --no-cone
-      - cp .dotfiles/git/well-architected/sparse-checkout well-architected/.git/info/sparse-checkout
-      - cd well-architected && git checkout
-
-      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/azure-docs.git
-      - cd azure-docs && git sparse-checkout init --no-cone
-      - cp .dotfiles/git/azure-docs/sparse-checkout azure-docs/.git/info/sparse-checkout
-      - cd azure-docs && git checkout
-
-  run:
-    desc: Run the app
-    cmds:
-      - "{{.PYTHON_VENV_BIN}}/python3 main.py"
-
-  generate:
-    desc: Generate the output
-    deps:
-      - run
-    cmds:
-      - npx --yes markmap-cli ./output/MINDMAP-1.md -o ./output/index.html
-
-  test:
-    desc: Run the tests
-    cmds:
-      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest -v"
-
-  test-coverage:
-    desc: Run the tests with coverage
-    cmds:
-      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest --doctest-modules --cov=mindmap --cov-report=xml --cov-report=html"
-
-  lint:
-    desc: Run the linter
-    cmds:
-      - echo "Running flake8..."
-      - "{{.PYTHON_VENV_BIN}}/flake8"
-      - echo "Running markdownlint..."
-      - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output .
-
-  pull-docs:
-    desc: Pull the docs
-    cmd: git submodule foreach --recursive git pull origin main
-
-  verify-docs:
-    desc: Verify the docs commit
-    cmds:
-      - git submodule foreach --recursive git rev-list --after="24 hours" --count HEAD | echo "$(grep -o '[0-9]*')"
-
   default:
     desc: Show this help
     cmds:
       - task --list
+
+  init:
+    desc: Initialize the project
+    deps:
+      - py:init
+      - node:init
+
+  generate:
+    desc: Generate the output
+    cmds:
+      - task: py:run
+      - task: node:run
+
+  test:
+    desc: Run the tests
+    cmds:
+      - task: py:test
+
+  test-coverage:
+    desc: Run the tests with coverage
+    cmds:
+      - task: py:test-coverage
+
+  lint:
+    desc: Run the
+    deps:
+      - py:lint
+      - node:lint

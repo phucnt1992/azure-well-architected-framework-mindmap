@@ -1,0 +1,18 @@
+version: "3"
+
+tasks:
+  init:
+    desc: Initialize node modules
+    cmds:
+      - npm i
+      - npm run prepare
+
+  lint:
+    desc: Run the linter
+    cmds:
+      - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output .
+
+  run:
+    desc: Generate the output
+    cmds:
+      - npx --yes markmap-cli ./output/MINDMAP-1.md -o ./output/index.html

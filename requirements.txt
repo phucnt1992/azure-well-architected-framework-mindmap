@@ -5,6 +5,4 @@ pytest
 pytest-cov
 isort
 typer
-
-# deps
 pyyaml

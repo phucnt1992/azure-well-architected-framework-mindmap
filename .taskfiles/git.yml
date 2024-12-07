@@ -1,0 +1,33 @@
+# yml-language-server: $schema=https://json.schemastore.org/taskfile
+# https://taskfile.devversion:
+
+version: "3"
+
+vars:
+  CLEAN_TARGETS: __pycache__ .pytest_cache .venv output .coverage coverage.xml node_modules
+
+tasks:
+  clean:
+    desc: Clean the project
+    cmds:
+      - rm -rf {{.CLEAN_TARGETS}}
+
+  clone-docs:
+    desc: Clone the docs
+    deps:
+      - clean-docs
+    cmds:
+      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/well-architected.git
+      - cd well-architected && git sparse-checkout init --no-cone
+      - cp .dotfiles/git/well-architected/sparse-checkout well-architected/.git/info/sparse-checkout
+      - cd well-architected && git checkout
+
+      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/azure-docs.git
+      - cd azure-docs && git sparse-checkout init --no-cone
+      - cp .dotfiles/git/azure-docs/sparse-checkout azure-docs/.git/info/sparse-checkout
+      - cd azure-docs && git checkout
+
+  clean-docs:
+    desc: Clean the docs
+    cmds:
+      - rm -rf well-architected azure-docs
