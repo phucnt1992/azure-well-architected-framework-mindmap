@@ -53,17 +53,17 @@ class TableOfContent:
     INDENT_SIZE = 2
     NEW_LINE_CHAR = "\n"
 
-    __root: Item
     __root_dir: str
     __root_uri: str
+    root_item: Item
 
     def __init__(self, root: Item = None, root_dir: str = None, root_uri: str = "/"):
-        self.__root = root
+        self.root_item = root
         self.__root_dir = root_dir
         self.__root_uri = root_uri
 
     def __str__(self) -> str:
-        return self.__str_recursive(self.__root)
+        return self.__str_recursive(self.root_item)
 
     def __str_recursive(self, item: Item, level: int = 0) -> str:
         result = f"{'  ' * level}- {item.name}{self.NEW_LINE_CHAR}"
@@ -71,10 +71,6 @@ class TableOfContent:
             result += self.__str_recursive(child, level + 1)
 
         return result
-
-    def convert_from_dict(self, data: dict) -> None:
-        self.__root = Item(data[Item.NAME_FIELD], href=data.get(Item.HREF_FIELD, None))
-        self.__convert_items(data[Item.ITEMS_FIELD], self.__root)
 
     def __convert_items(self, items: list[dict], parent: Item) -> None:
         for item in items:
@@ -87,11 +83,26 @@ class TableOfContent:
             if Item.ITEMS_FIELD in item:
                 self.__convert_items(item[Item.ITEMS_FIELD], new_item)
 
-    def to_mindmap(self, root_level: int = 0) -> str:
-        with StringIO() as text:
-            result = self.__to_mindmap_recursive(self.__root, text, root_level)
-            # Remove the last newline
-            return result.getvalue()[::-1].replace(self.NEW_LINE_CHAR, "", 1)[::-1]
+    def convert_from_dict(self, data: dict) -> None:
+        self.root_item = Item(data[Item.NAME_FIELD], href=data.get(Item.HREF_FIELD, None))
+        if Item.ITEMS_FIELD in data:
+            self.__convert_items(data[Item.ITEMS_FIELD], self.root_item)
+
+    def __fill_with_hash(self, length: int) -> str:
+        return "#" * length
+
+    def __fill_with_space(self, length: int) -> str:
+        return " " * length * self.INDENT_SIZE
+
+    def __format_to_md_link(self, href: str, header: str, level: int) -> str:
+        stripped_header = header.lstrip("#").strip()
+        header_id = (
+            f"#{remove_chars(stripped_header.lower().replace(' ', '-'))}"
+            if level > 1
+            else ""
+        )
+
+        return f" [{stripped_header}]({self.__root_uri}{href.removesuffix('.md')}{header_id})"
 
     def __to_mindmap_recursive(self, item: Item, text: StringIO, level: int = 0) -> str:
         if (
@@ -131,18 +142,16 @@ class TableOfContent:
 
         return text
 
-    def __fill_with_hash(self, length: int) -> str:
-        return "#" * length
+    def to_mindmap(self, root_level: int = 0) -> str:
+        with StringIO() as text:
+            result = self.__to_mindmap_recursive(self.root_item, text, root_level)
+            # Remove the last newline
+            return result.getvalue()[::-1].replace(self.NEW_LINE_CHAR, "", 1)[::-1]
 
-    def __fill_with_space(self, length: int) -> str:
-        return " " * length * self.INDENT_SIZE
+    def merge(self, other: "TableOfContent") -> "TableOfContent":
+        if self.root_item is None:
+            self.root_item = other.root_item
+        else:
+            self.root_item.children.append(other.root_item)
 
-    def __format_to_md_link(self, href: str, header: str, level: int) -> str:
-        stripped_header = header.lstrip("#").strip()
-        header_id = (
-            f"#{remove_chars(stripped_header.lower().replace(' ', '-'))}"
-            if level > 1
-            else ""
-        )
-
-        return f" [{stripped_header}]({self.__root_uri}{href.removesuffix('.md')}{header_id})"
+        return self

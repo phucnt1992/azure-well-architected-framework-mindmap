@@ -14,8 +14,7 @@ tasks:
 
   run:
     desc: Run the app
-    cmds:
-      - "{{.PYTHON_VENV_BIN}}/python3 main.py"
+    cmd: "{{.PYTHON_VENV_BIN}}/python3 main.py {{.CLI_ARGS}}"
 
   test:
     desc: Run the tests

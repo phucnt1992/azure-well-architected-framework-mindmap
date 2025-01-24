@@ -53,3 +53,41 @@ def test_convert_table_of_content_to_mindmap(mock_table_of_content_dict):
     with open(os.path.join(example_dir, "expected_result.md"), "r") as file:
         expected_result = file.read()
         assert actual_result == expected_result
+
+
+def test_merge_table_of_content():
+    # Arrange
+    first_toc = TableOfContent()
+    first_toc.convert_from_dict(
+        {
+            "name": "First TOC",
+            "href": "./index.yml",
+        }
+    )
+
+    second_toc = TableOfContent()
+    second_toc.convert_from_dict(
+        {
+            "name": "Second TOC",
+            "href": "./index.yml",
+            "items": [
+                {
+                    "name": "Children",
+                    "items": [
+                        {"name": "Test 3", "href": "test-3.md"},
+                        {"name": "Test 4", "href": "test-4.md"},
+                    ],
+                }
+            ],
+        }
+    )
+
+    # Act
+    actual_result = TableOfContent()
+    actual_result.merge(first_toc) \
+        .merge(second_toc)
+
+    # Assert
+    actual_result_content = str(actual_result)
+    assert "First TOC" in actual_result_content
+    assert "Second TOC" in actual_result_content
