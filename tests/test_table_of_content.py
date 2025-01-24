@@ -84,8 +84,7 @@ def test_merge_table_of_content():
 
     # Act
     actual_result = TableOfContent()
-    actual_result.merge(first_toc) \
-        .merge(second_toc)
+    actual_result.merge(first_toc).merge(second_toc)
 
     # Assert
     actual_result_content = str(actual_result)

@@ -84,7 +84,9 @@ class TableOfContent:
                 self.__convert_items(item[Item.ITEMS_FIELD], new_item)
 
     def convert_from_dict(self, data: dict) -> None:
-        self.root_item = Item(data[Item.NAME_FIELD], href=data.get(Item.HREF_FIELD, None))
+        self.root_item = Item(
+            data[Item.NAME_FIELD], href=data.get(Item.HREF_FIELD, None)
+        )
         if Item.ITEMS_FIELD in data:
             self.__convert_items(data[Item.ITEMS_FIELD], self.root_item)
 

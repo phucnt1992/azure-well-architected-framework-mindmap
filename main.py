@@ -36,8 +36,7 @@ def before_after_command(f):
 
 @app.command("well-architected")
 def generate_azure_well_architect_mind_map():
-    console.print("🗺️ Generating Mindmap for Azure Well-Architected..."
-                  )
+    console.print("🗺️ Generating Mindmap for Azure Well-Architected...")
     cwd_dir = os.getcwd()
     doc_dir = os.path.join(cwd_dir, "well-architected")
     toc_files = load_indexes(doc_dir)
@@ -100,7 +99,9 @@ def generate_azure_docs_mindmap():
 
         console.print(f"Processing {file_path}...")
 
-        toc = TableOfContent(root_dir=dir_path, root_uri="https://docs.microsoft.com/en-us/azure/")
+        toc = TableOfContent(
+            root_dir=dir_path, root_uri="https://docs.microsoft.com/en-us/azure/"
+        )
 
         toc.convert_from_dict(content[0])
 
