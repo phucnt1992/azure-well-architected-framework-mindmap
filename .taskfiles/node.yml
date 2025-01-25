@@ -15,4 +15,4 @@ tasks:
   run:
     desc: Generate the output
     cmds:
-      - npx --yes markmap-cli ./output/MINDMAP-1.md -o ./output/index.html
+      - npx --yes markmap-cli ./output/*.md -o ./output/index.html

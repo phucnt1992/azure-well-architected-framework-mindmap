@@ -23,3 +23,13 @@ def test_load_indexes_with_dir_with_index_yml_should_return_index_yml(fixture_di
     dir_path, file_path = actual_result[0]
     assert file_path == os.path.join(fixture_dir, "test_index.yml")
     assert dir_path == fixture_dir
+
+
+def test_load_indexes_with_exclude_dir_should_return_empty_list(fixture_dir):
+    # Arrange
+
+    # Act
+    actual_result = load_indexes(fixture_dir, "test_index.yml", "fixtures")
+
+    # Assert
+    assert actual_result == []

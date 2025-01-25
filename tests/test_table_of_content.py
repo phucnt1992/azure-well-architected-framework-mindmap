@@ -19,7 +19,7 @@ def test_convert_table_of_content_to_object(mock_table_of_content_dict):
     # Act
     actual_result = TableOfContent()
 
-    actual_result.convert_from_dict(
+    actual_result.load(
         {
             "name": "Root",
             "href": "./index.yml",
@@ -58,7 +58,7 @@ def test_convert_table_of_content_to_mindmap(mock_table_of_content_dict):
 def test_merge_table_of_content():
     # Arrange
     first_toc = TableOfContent()
-    first_toc.convert_from_dict(
+    first_toc.load(
         {
             "name": "First TOC",
             "href": "./index.yml",
@@ -66,7 +66,7 @@ def test_merge_table_of_content():
     )
 
     second_toc = TableOfContent()
-    second_toc.convert_from_dict(
+    second_toc.load(
         {
             "name": "Second TOC",
             "href": "./index.yml",

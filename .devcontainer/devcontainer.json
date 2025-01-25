@@ -32,7 +32,8 @@
         "streetsidesoftware.code-spell-checker",
         "task.vscode-task",
         "redhat.vscode-yaml",
-        "SonarSource.sonarlint-vscode"
+        "SonarSource.sonarlint-vscode",
+        "ms-python.isort"
       ]
     }
   }

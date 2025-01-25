@@ -1,43 +1,28 @@
-import os
-from io import StringIO
+from dataclasses import dataclass
 
 
-def read_md_file(md_file: str) -> list[str]:
-    """Read the markdown file and return the content."""
-    with open(md_file, "r") as file:
-        lines = file.readlines()
-
-    headers = filter(lambda line: line.startswith("#"), lines)
-
-    return list(
-        map(lambda line: line.replace(TableOfContent.NEW_LINE_CHAR, ""), headers)
-    )
-
-
-def remove_chars(s: str) -> str:
-    chars_to_remove = "'?():"
-    table = str.maketrans("", "", chars_to_remove)
-    return s.translate(table)
-
-
+@dataclass
 class Item:
     NAME_FIELD = "name"
     HREF_FIELD = "href"
     ITEMS_FIELD = "items"
 
-    name: str
+    name: str | int
     parent: "Item"
     children: list["Item"]
     href: str
+    root_dir: str
 
     def __init__(
         self,
         name: str,
         parent: "Item" = None,
         href: str = None,
+        root_dir: str = None,
     ):
         self.name = name
         self.href = href
+        self.root_dir = root_dir
         self.children = []
 
         if parent is not None:
@@ -45,16 +30,16 @@ class Item:
             self.parent.add_child(self)
 
     def add_child(self, child: "Item"):
+        child.parent = self
         self.children.append(child)
 
 
+@dataclass
 class TableOfContent:
     MAX_HEADER_LEVEL = 6
-    INDENT_SIZE = 2
     NEW_LINE_CHAR = "\n"
 
     __root_dir: str
-    __root_uri: str
     root_item: Item
 
     def __init__(self, root: Item = None, root_dir: str = None, root_uri: str = "/"):
@@ -72,88 +57,34 @@ class TableOfContent:
 
         return result
 
-    def __convert_items(self, items: list[dict], parent: Item) -> None:
+    def __has_items(self, item: dict) -> bool:
+        return Item.ITEMS_FIELD in item and item[Item.ITEMS_FIELD] is not None
+
+    def __load_items(self, items: list[dict], parent: Item) -> None:
         for item in items:
             new_item = Item(
                 item.get(Item.NAME_FIELD),
                 parent=parent,
                 href=item.get(Item.HREF_FIELD, None),
+                root_dir=self.__root_dir,
             )
 
-            if Item.ITEMS_FIELD in item:
-                self.__convert_items(item[Item.ITEMS_FIELD], new_item)
+            if self.__has_items(item):
+                self.__load_items(item[Item.ITEMS_FIELD], new_item)
 
-    def convert_from_dict(self, data: dict) -> None:
+    def load(self, data: dict) -> None:
         self.root_item = Item(
-            data[Item.NAME_FIELD], href=data.get(Item.HREF_FIELD, None)
+            data.get(Item.NAME_FIELD),
+            href=data.get(Item.HREF_FIELD, None),
+            root_dir=self.__root_dir,
         )
-        if Item.ITEMS_FIELD in data:
-            self.__convert_items(data[Item.ITEMS_FIELD], self.root_item)
-
-    def __fill_with_hash(self, length: int) -> str:
-        return "#" * length
-
-    def __fill_with_space(self, length: int) -> str:
-        return " " * length * self.INDENT_SIZE
-
-    def __format_to_md_link(self, href: str, header: str, level: int) -> str:
-        stripped_header = header.lstrip("#").strip()
-        header_id = (
-            f"#{remove_chars(stripped_header.lower().replace(' ', '-'))}"
-            if level > 1
-            else ""
-        )
-
-        return f" [{stripped_header}]({self.__root_uri}{href.removesuffix('.md')}{header_id})"
-
-    def __to_mindmap_recursive(self, item: Item, text: StringIO, level: int = 0) -> str:
-        if (
-            item.href is None
-            or item.href.endswith(".yml")
-            or item.href.endswith(".yaml")
-        ):
-            lint_name = item.name if item.name.startswith("#") else f" {item.name}"
-            text.write(
-                f"{self.__fill_with_hash(level + 1)}{lint_name}{self.NEW_LINE_CHAR}"
-            )
-            text.write(self.NEW_LINE_CHAR)
-
-        if item.href is not None and item.href.endswith(".md"):
-            md_file = os.path.join(self.__root_dir, item.href)
-            headers = read_md_file(md_file)
-            for header in headers:
-                local_level = header.count("#")
-                total_level = level + local_level
-                link_text = self.__format_to_md_link(item.href, header, local_level)
-
-                # Maximum Header Level is 6 in Markdown
-                if total_level > self.MAX_HEADER_LEVEL:
-                    text.write(
-                        f"{self.__fill_with_space(total_level - self.MAX_HEADER_LEVEL - 1)}-{link_text}{self.NEW_LINE_CHAR}"
-                    )
-                    text.write(self.NEW_LINE_CHAR)
-
-                else:
-                    text.write(
-                        f"{self.__fill_with_hash(total_level)}{link_text}{self.NEW_LINE_CHAR}"
-                    )
-                    text.write(self.NEW_LINE_CHAR)
-
-        for child in item.children:
-            self.__to_mindmap_recursive(child, text, level + 1)
-
-        return text
-
-    def to_mindmap(self, root_level: int = 0) -> str:
-        with StringIO() as text:
-            result = self.__to_mindmap_recursive(self.root_item, text, root_level)
-            # Remove the last newline
-            return result.getvalue()[::-1].replace(self.NEW_LINE_CHAR, "", 1)[::-1]
+        if self.__has_items(data):
+            self.__load_items(data[Item.ITEMS_FIELD], self.root_item)
 
     def merge(self, other: "TableOfContent") -> "TableOfContent":
         if self.root_item is None:
             self.root_item = other.root_item
         else:
-            self.root_item.children.append(other.root_item)
+            self.root_item.add_child(other.root_item)
 
         return self

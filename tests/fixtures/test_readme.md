@@ -1,3 +1,21 @@
+---
+title: Request an access token in Azure Active Directory B2C
+description: Learn how to request an access token from Azure Active Directory B2C.
+
+author: kengaderdus
+manager: CelesteDG
+
+ms.service: azure-active-directory
+
+ms.topic: concept-article
+ms.date: 01/11/2024
+ms.author: kengaderdus
+ms.subservice: b2c
+
+
+#Customer intent: As a developer integrating Azure Active Directory B2C with a web application and web API, I want to understand how to request an access token, so that I can authenticate and authorize users to access my APIs securely.
+---
+
 # Main Title
 
 ignore this line

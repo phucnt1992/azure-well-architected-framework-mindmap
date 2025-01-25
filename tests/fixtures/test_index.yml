@@ -3,7 +3,7 @@
   items:
     - name: Children
       items:
-        - name: Test 1
+        - name: Test 1	
           href: test-1.md
         - name: Test 2
           href: test-2.md
