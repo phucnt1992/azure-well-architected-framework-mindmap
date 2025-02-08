@@ -3,7 +3,7 @@ import shutil
 
 import pytest
 
-from mindmap.utils import write_md_file
+from mindmap.utils.file import write_md_file
 
 
 @pytest.fixture

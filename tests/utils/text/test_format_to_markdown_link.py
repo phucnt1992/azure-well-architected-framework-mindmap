@@ -1,4 +1,4 @@
-from mindmap.utils import format_to_markdown_link
+from mindmap.utils.text import format_to_markdown_link
 
 
 def test_format_to_markdown_link_should_return_md_link():

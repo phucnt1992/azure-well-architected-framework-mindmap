@@ -10,8 +10,13 @@ tasks:
   lint:
     desc: Run the linter
     cmds:
-      - npx markdownlint-cli --ignore node_modules --ignore well-architected --ignore output --ignore azure-docs .
-
+      - |
+        npx markdownlint-cli \
+        --ignore node_modules \
+        --ignore well-architected \
+        --ignore output \
+        --ignore azure-docs \
+        --ignore tests .
   run:
     desc: Generate the output
     cmds:

@@ -3,4 +3,5 @@ exclude =
     .git,
     __pycache__
     .venv
+    node_modules
 max-line-length = 200

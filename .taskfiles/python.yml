@@ -19,7 +19,7 @@ tasks:
   test:
     desc: Run the tests
     cmds:
-      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest -v"
+      - "{{.PYTHON_VENV_BIN}}/python3 -m pytest -v --rootdir=."
 
   test-coverage:
     desc: Run the tests with coverage

@@ -1,18 +1,15 @@
-import os
-
-import pytest
-
 from mindmap.models import Item, TableOfContent
 
 
-@pytest.fixture
-def mock_table_of_content_dict():
+def test_table_of_content_when_init_should_set_properties():
+    # Arrange
     root_item = Item("Root", href="./index.yml")
-    children_item = Item("Children", parent=root_item)
-    _ = Item("Test 1", parent=children_item, href="test-1.md")
-    _ = Item("Test 2", parent=children_item, href="test-2.md")
 
-    return root_item
+    # Act
+    actual_result = TableOfContent(root_item)
+
+    # Assert
+    assert actual_result.root_item == root_item
 
 
 def test_convert_table_of_content_to_object(mock_table_of_content_dict):
@@ -37,22 +34,6 @@ def test_convert_table_of_content_to_object(mock_table_of_content_dict):
 
     # Assert
     assert str(actual_result) == str(TableOfContent(mock_table_of_content_dict))
-
-
-def test_convert_table_of_content_to_mindmap(mock_table_of_content_dict):
-    # Arrange
-    test_dir = os.path.dirname(os.path.realpath(__file__))
-    example_dir = os.path.join(test_dir, "examples")
-
-    table_of_content = TableOfContent(mock_table_of_content_dict, example_dir)
-
-    # Act
-    actual_result = table_of_content.to_mindmap()
-
-    # Assert
-    with open(os.path.join(example_dir, "expected_result.md"), "r") as file:
-        expected_result = file.read()
-        assert actual_result == expected_result
 
 
 def test_merge_table_of_content():

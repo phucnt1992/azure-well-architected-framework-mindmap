@@ -402,3 +402,7 @@ output
 
 # Python virtual environment
 .venv
+
+# docs
+/azure-docs
+/well-architected

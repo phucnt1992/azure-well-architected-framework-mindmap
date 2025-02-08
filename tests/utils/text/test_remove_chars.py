@@ -1,4 +1,4 @@
-from mindmap.utils import remove_chars
+from mindmap.utils.text import remove_chars
 
 
 def test_remove_chars_should_remove_selected_chars():

@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from mindmap.utils.file import NEW_LINE_CHAR
+
 
 @dataclass
 class Item:
@@ -36,24 +38,29 @@ class Item:
 
 @dataclass
 class TableOfContent:
-    MAX_HEADER_LEVEL = 6
-    NEW_LINE_CHAR = "\n"
 
     __root_dir: str
-    root_item: Item
+    __root_item: Item
 
-    def __init__(self, root: Item = None, root_dir: str = None, root_uri: str = "/"):
-        self.root_item = root
+    def __init__(self, root: Item = None, root_dir: str = None):
+        self.__root_item = root
         self.__root_dir = root_dir
-        self.__root_uri = root_uri
+
+    @property
+    def root_item(self) -> Item:
+        return self.__root_item
+
+    @root_item.setter
+    def root_item(self, value: Item) -> None:
+        self.__root_item = value
 
     def __str__(self) -> str:
-        return self.__str_recursive(self.root_item)
+        return self.__to_str_recursive(self.root_item)
 
-    def __str_recursive(self, item: Item, level: int = 0) -> str:
-        result = f"{'  ' * level}- {item.name}{self.NEW_LINE_CHAR}"
+    def __to_str_recursive(self, item: Item, level: int = 0) -> str:
+        result = f"{'  ' * level}- {item.name}{NEW_LINE_CHAR}"
         for child in item.children:
-            result += self.__str_recursive(child, level + 1)
+            result += self.__to_str_recursive(child, level + 1)
 
         return result
 

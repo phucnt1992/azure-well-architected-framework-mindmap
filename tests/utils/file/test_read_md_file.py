@@ -1,6 +1,6 @@
 import os
 
-from mindmap.models import read_md_file
+from mindmap.utils.file import read_md_file
 
 
 def test_read_md_file_should_extract_headers_nodes(fixture_dir):

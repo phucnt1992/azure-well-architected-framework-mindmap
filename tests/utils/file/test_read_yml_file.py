@@ -1,6 +1,6 @@
 import os
 
-from mindmap.utils import read_yml_file
+from mindmap.utils.file import read_yml_file
 
 
 def test_read_yml_file_with_invalid_file_should_return_none(fixture_dir):

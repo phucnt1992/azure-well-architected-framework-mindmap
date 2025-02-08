@@ -1,12 +1,14 @@
+import logging
 import os
-from functools import wraps
-from typing import Annotated
+from typing import Annotated, Optional
 
 import typer
 from rich.console import Console
+from rich.logging import RichHandler
 
+from mindmap.converters import MindMapConverter
 from mindmap.models import Item, TableOfContent
-from mindmap.utils import load_indexes, read_yml_file, write_md_file
+from mindmap.utils.file import read_yml_file, scan_toc_files, write_md_file
 
 OUTPUT_DIR = "output"
 META_HEADER = """---
@@ -17,22 +19,27 @@ markmap:
 ---"""
 
 app = typer.Typer()
+state = {"verbose": False}
 console = Console()
 
 
-def before_after_command(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        console.print("🚀 Starting...")
-        try:
-            result = f(*args, **kwargs)
-            console.print("✅ Done")
-            return result
-        except Exception as e:
-            console.print_exception(e)
-            console.print("❌ Failed")
+@app.callback()
+def main(
+    verbose: Annotated[
+        Optional[bool], typer.Option("--verbose", "-v", help="Enable verbose logs")
+    ] = False
+):
+    state["verbose"] = verbose
+    default_level = logging.INFO
+    fmt = "%(message)s"
+    if verbose:
+        default_level = logging.DEBUG
+    logging.basicConfig(
+        level=default_level, format=fmt, datefmt="[%X]", handlers=[RichHandler()]
+    )
 
-    return decorated
+    if verbose:
+        logging.debug("Verbose mode is enabled")
 
 
 @app.command("well-architected")
@@ -40,7 +47,11 @@ def generate_azure_well_architect_mind_map():
     console.print("🗺️ Generating Mindmap for Azure Well-Architected...")
     cwd_dir = os.getcwd()
     doc_dir = os.path.join(cwd_dir, "well-architected")
-    toc_files = load_indexes(doc_dir, exclude_dir="bread")
+    toc_files = scan_toc_files(doc_dir, exclude_dir="bread")
+    converter = MindMapConverter(
+        root_dir=doc_dir,
+        root_uri="https://learn.microsoft.com/en-us/azure/well-architected/",
+    )
 
     console.print(f"Total {len(toc_files)} mind maps will be generated")
 
@@ -50,13 +61,10 @@ def generate_azure_well_architect_mind_map():
 
         console.print(f"Processing {file_path}...")
 
-        toc = TableOfContent(
-            root_dir=dir_path,
-            root_uri="https://learn.microsoft.com/en-us/azure/well-architected/",
-        )
+        toc = TableOfContent(root_dir=dir_path)
         toc.load(content[0])
 
-        result = toc.to_mindmap()
+        result = converter.convert(toc)
 
         output_dir = os.path.join(cwd_dir, OUTPUT_DIR)
         readme_file = os.path.join(output_dir, f"well-architected-mindmap-{idx+1}.md")
@@ -66,13 +74,12 @@ def generate_azure_well_architect_mind_map():
 
 
 @app.command("list")
-@before_after_command
 def list_toc_files(path: Annotated[str, typer.Argument()]):
-    console.print(f"📂 Listing all TOC files in {path}...")
+    logging.info(f"📂 Listing all TOC files in {path}...")
 
     cwd_dir = os.getcwd()
     doc_dir = os.path.join(cwd_dir, path)
-    toc_files = load_indexes(doc_dir)
+    toc_files = scan_toc_files(doc_dir)
 
     console.print(f"Total {len(toc_files)} files found")
 
@@ -91,15 +98,15 @@ def generate_azure_docs_mindmap():
     doc_dir = os.path.join(cwd_dir, "azure-docs")
     output_dir = os.path.join(cwd_dir, OUTPUT_DIR)
     article_dir = os.path.join(doc_dir, "articles")
-    toc_folders = load_indexes(doc_dir, exclude_dir="bread")
+    toc_folders = scan_toc_files(doc_dir, exclude_dir="bread")
 
     console.print(f"Total {len(toc_folders)} mind maps will be generated")
 
     toc = TableOfContent(
         root=Item(name="Azure Docs", href=root_uri),
         root_dir=doc_dir,
-        root_uri=root_uri
     )
+
     # Sort the files by name
     toc_folders.sort(key=lambda x: x[1])
 
@@ -109,12 +116,14 @@ def generate_azure_docs_mindmap():
         console.print(f"Processing {file_path}...")
 
         articles = read_yml_file(file_path)
-        article_path = os.path.relpath(file_path, start=article_dir).lower().removesuffix("toc.yml")
+        article_path = (
+            os.path.relpath(file_path, start=article_dir)
+            .lower()
+            .removesuffix("toc.yml")
+        )
         article_uri = f"{root_uri}{article_path}"
 
-        root_toc = TableOfContent(
-            root_dir=dir_path, root_uri=article_uri
-        )
+        root_toc = TableOfContent(root_dir=dir_path, root_uri=article_uri)
 
         if isinstance(articles, dict):
             articles = articles.get(Item.ITEMS_FIELD, [])
@@ -126,7 +135,7 @@ def generate_azure_docs_mindmap():
             root_toc.merge(article_toc)
 
         article_content = root_toc.to_mindmap()
-        file_name = root_toc.root_item.name.lower().replace(' ', '-').replace('/', '-')
+        file_name = root_toc.root_item.name.lower().replace(" ", "-").replace("/", "-")
         readme_file = os.path.join(output_dir, f"docs-{file_name}.md")
         write_md_file(article_content, readme_file, META_HEADER)
         console.print(f"Generated {readme_file}")

@@ -15,7 +15,6 @@ ms.subservice: b2c
 
 #Customer intent: As a developer integrating Azure Active Directory B2C with a web application and web API, I want to understand how to request an access token, so that I can authenticate and authorize users to access my APIs securely.
 ---
-
 # Main Title
 
 ignore this line
