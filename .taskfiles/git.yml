@@ -5,6 +5,7 @@ version: "3"
 
 vars:
   CLEAN_TARGETS: __pycache__ .pytest_cache .venv output .coverage coverage.xml node_modules
+  CLONE_DIR: .tmp
 
 tasks:
   clean:
@@ -14,18 +15,21 @@ tasks:
 
   clone-docs:
     desc: Clone the docs
+    vars:
+      AZURE_DOCS_DIR: "{{.CLONE_DIR}}/azure-docs"
+      WELL_ARCHITECTED_DIR: "{{.CLONE_DIR}}/well-architected"
     deps:
       - clean-docs
     cmds:
-      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/well-architected.git
-      - cd well-architected && git sparse-checkout init --no-cone
-      - cp .dotfiles/git/well-architected/sparse-checkout well-architected/.git/info/sparse-checkout
-      - cd well-architected && git checkout
+      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/well-architected.git {{.WELL_ARCHITECTED_DIR}}
+      - cd {{.WELL_ARCHITECTED_DIR}} && git sparse-checkout init --no-cone
+      - cp .dotfiles/git/well-architected/sparse-checkout {{.WELL_ARCHITECTED_DIR}}/.git/info/sparse-checkout
+      - cd {{.WELL_ARCHITECTED_DIR}} && git checkout
 
-      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/azure-docs.git
-      - cd azure-docs && git sparse-checkout init --no-cone
-      - cp .dotfiles/git/azure-docs/sparse-checkout azure-docs/.git/info/sparse-checkout
-      - cd azure-docs && git checkout
+      - git clone --filter=blob:none --no-checkout -b main --depth 1 https://github.com/MicrosoftDocs/azure-docs.git {{.AZURE_DOCS_DIR}}
+      - cd {{.AZURE_DOCS_DIR}} && git sparse-checkout init --no-cone
+      - cp .dotfiles/git/azure-docs/sparse-checkout {{.AZURE_DOCS_DIR}}/.git/info/sparse-checkout
+      - cd {{.AZURE_DOCS_DIR}} && git checkout
 
   clean-docs:
     desc: Clean the docs

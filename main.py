@@ -11,6 +11,8 @@ from mindmap.models import Item, TableOfContent
 from mindmap.utils.file import read_yml_file, scan_toc_files, write_md_file
 
 OUTPUT_DIR = "output"
+DOC_DIR = ".tmp"
+
 META_HEADER = """---
 markmap:
   colorFreezeLevel: 2
@@ -46,7 +48,7 @@ def main(
 def generate_azure_well_architect_mind_map():
     console.print("🗺️ Generating Mindmap for Azure Well-Architected...")
     cwd_dir = os.getcwd()
-    doc_dir = os.path.join(cwd_dir, "well-architected")
+    doc_dir = os.path.join(cwd_dir, DOC_DIR, "well-architected")
     toc_files = scan_toc_files(doc_dir, exclude_dir="bread")
     converter = MindMapConverter(
         root_dir=doc_dir,
@@ -95,13 +97,14 @@ def generate_azure_docs_mindmap():
 
     root_uri = "https://docs.microsoft.com/en-us/azure/"
     cwd_dir = os.getcwd()
-    doc_dir = os.path.join(cwd_dir, "azure-docs")
+    doc_dir = os.path.join(cwd_dir, DOC_DIR, "azure-docs")
     output_dir = os.path.join(cwd_dir, OUTPUT_DIR)
     article_dir = os.path.join(doc_dir, "articles")
     toc_folders = scan_toc_files(doc_dir, exclude_dir="bread")
 
     console.print(f"Total {len(toc_folders)} mind maps will be generated")
 
+    converter = MindMapConverter(root_dir=doc_dir, root_uri=root_uri)
     toc = TableOfContent(
         root=Item(name="Azure Docs", href=root_uri),
         root_dir=doc_dir,
@@ -121,28 +124,30 @@ def generate_azure_docs_mindmap():
             .lower()
             .removesuffix("toc.yml")
         )
-        article_uri = f"{root_uri}{article_path}"
-
-        root_toc = TableOfContent(root_dir=dir_path, root_uri=article_uri)
+        current_toc = TableOfContent(root_dir=dir_path)
+        converter.root_uri = f"{root_uri}{article_path}"
 
         if isinstance(articles, dict):
             articles = articles.get(Item.ITEMS_FIELD, [])
 
         for article_item in articles:
-            article_toc = TableOfContent(root_dir=dir_path, root_uri=article_uri)
+            article_toc = TableOfContent(root_dir=dir_path)
 
             article_toc.load(article_item)
-            root_toc.merge(article_toc)
+            current_toc.merge(article_toc)
 
-        article_content = root_toc.to_mindmap()
-        file_name = root_toc.root_item.name.lower().replace(" ", "-").replace("/", "-")
+        article_content = converter.convert(current_toc)
+
+        file_name = current_toc.root_item.name.lower().replace(" ", "-").replace("/", "-")
         readme_file = os.path.join(output_dir, f"docs-{file_name}.md")
+
         write_md_file(article_content, readme_file, META_HEADER)
         console.print(f"Generated {readme_file}")
 
-        toc.merge(root_toc)
+        toc.merge(current_toc)
 
-    result = toc.to_mindmap(max_level=2)
+    converter.root_uri = root_uri
+    result = converter.convert(toc, max_level=2)
     readme_file = os.path.join(output_dir, "docs.md")
     write_md_file(result, readme_file, META_HEADER)
 

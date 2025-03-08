@@ -33,7 +33,8 @@
         "task.vscode-task",
         "redhat.vscode-yaml",
         "SonarSource.sonarlint-vscode",
-        "ms-python.isort"
+        "ms-python.isort",
+        "vitest.explorer"
       ]
     }
   }

@@ -16,3 +16,12 @@ indent_size = 2
 
 [*.json]
 indent_size = 2
+
+[*.{jsx,js,ts,tsx}]
+indent_size = 2
+
+[*.html]
+indent_size = 2
+
+[*.css,*.scss]
+indent_size = 2
