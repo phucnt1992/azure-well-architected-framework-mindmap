@@ -29,7 +29,7 @@ console = Console()
 def main(
     verbose: Annotated[
         Optional[bool], typer.Option("--verbose", "-v", help="Enable verbose logs")
-    ] = False
+    ] = False,
 ):
     state["verbose"] = verbose
     default_level = logging.INFO
@@ -138,7 +138,9 @@ def generate_azure_docs_mindmap():
 
         article_content = converter.convert(current_toc)
 
-        file_name = current_toc.root_item.name.lower().replace(" ", "-").replace("/", "-")
+        file_name = (
+            current_toc.root_item.name.lower().replace(" ", "-").replace("/", "-")
+        )
         readme_file = os.path.join(output_dir, f"docs-{file_name}.md")
 
         write_md_file(article_content, readme_file, META_HEADER)

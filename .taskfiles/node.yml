@@ -16,6 +16,7 @@ tasks:
         --ignore well-architected \
         --ignore output \
         --ignore azure-docs \
+        --ignore app \
         --ignore tests .
   run:
     desc: Generate the output
