@@ -1,25 +1,26 @@
 import { Bars3Icon } from '@heroicons/react/24/solid';
 
+const renderMenuItems = () => {
+  return (
+    <>
+      <li>
+        <a>Home</a>
+      </li>
+      <li><a>Azure Well-Architected</a></li>
+      <li>
+        <details>
+          <summary>Azure Docs</summary>
+          <ul className="p-2">
+            <li><a>Submenu 1</a></li>
+            <li><a>Submenu 2</a></li>
+          </ul>
+        </details>
+      </li>
+    </>
+  )
+}
+
 export const Header = () => {
-  const renderMenuItems = () => {
-    return (
-      <>
-        <li>
-          <a>Home</a>
-        </li>
-        <li><a>Azure Well-Architected</a></li>
-        <li>
-          <details>
-            <summary>Azure Docs</summary>
-            <ul className="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
-            </ul>
-          </details>
-        </li>
-      </>
-    )
-  }
 
   return (
     <div id="header" data-testid="header" className="navbar bg-base-100 mx-auto shadow-sm">

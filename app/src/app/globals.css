@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@import "markmap-toolbar/dist/style.css";
+
 
 @theme {
     --font-sans: var(--font-geist-sans);

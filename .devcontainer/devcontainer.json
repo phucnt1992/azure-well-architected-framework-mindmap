@@ -34,7 +34,9 @@
         "redhat.vscode-yaml",
         "SonarSource.sonarlint-vscode",
         "ms-python.isort",
-        "vitest.explorer"
+        "vitest.explorer",
+        "mike-co.import-sorter",
+        "esbenp.prettier-vscode"
       ]
     }
   }
