@@ -1,31 +1,33 @@
 {
-    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-    "ignorePaths": [
-        ".devcontainer",
-        ".vscode",
-        "package*.json"
-    ],
-    "words": [
-        "cmds",
-        "deinit",
-        "devcontainer",
-        "doctest",
-        "dotfiles",
-        "isort",
-        "markdownlint",
-        "markmap",
-        "mindmap",
-        "Phuc",
-        "pycache",
-        "pytest",
-        "pyyaml",
-        "sonarcloud",
-        "sonarsource",
-        "Taskfile",
-        "taskfiles",
-        "typer",
-        "usefixtures",
-        "venv",
-        "xmlcharrefreplace"
-    ]
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "ignorePaths": [
+    ".devcontainer",
+    ".vscode",
+    "package*.json",
+    ".nvim"
+  ],
+  "words": [
+    "nvim",
+    "cmds",
+    "deinit",
+    "devcontainer",
+    "doctest",
+    "dotfiles",
+    "isort",
+    "markdownlint",
+    "markmap",
+    "mindmap",
+    "Phuc",
+    "pycache",
+    "pytest",
+    "pyyaml",
+    "sonarcloud",
+    "sonarsource",
+    "Taskfile",
+    "taskfiles",
+    "typer",
+    "usefixtures",
+    "venv",
+    "xmlcharrefreplace"
+  ]
 }

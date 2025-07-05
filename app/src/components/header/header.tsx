@@ -1,20 +1,32 @@
+"use client";
 import { Bars3Icon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
+import ThemeToggle from '../theme-toggle/theme-toggle';
 
 const renderMenuItems = () => {
   return (
     <>
       <li>
-        <a>Home</a>
+        <Link href="/" data-testid="home">
+          Home
+        </Link>
       </li>
-      <li><a>Azure Well-Architected</a></li>
+      <li>
+        <Link href="/well-architected" data-testid="well-architected">
+          Azure Well-Architected
+        </Link>
+      </li>
       <li>
         <details>
           <summary>Azure Docs</summary>
           <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
+            <li><Link href="/docs/submenu1">Submenu 1</Link></li>
+            <li><Link href="/docs/submenu2">Submenu 2</Link></li>
           </ul>
         </details>
+      </li>
+      <li>
+        <ThemeToggle />
       </li>
     </>
   )
