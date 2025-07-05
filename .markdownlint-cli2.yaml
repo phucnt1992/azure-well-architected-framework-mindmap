@@ -4,3 +4,4 @@ ignores:
   - well-architected
   - .git
   - __pycache__
+  - output

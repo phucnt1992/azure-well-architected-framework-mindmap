@@ -4,14 +4,15 @@ from io import StringIO
 
 def read_md_file(md_file: str) -> list[str]:
     """Read the markdown file and return the content."""
-    with open(md_file, "r") as file:
-        lines = file.readlines()
+    try:
+        with open(md_file, "r") as file:
+            lines = file.readlines()
 
-    headers = filter(lambda line: line.startswith("#"), lines)
+        headers = filter(lambda line: line.startswith("#"), lines)
 
-    return list(
-        map(lambda line: line.replace(TableOfContent.NEW_LINE_CHAR, ""), headers)
-    )
+        return [line.replace(TableOfContent.NEW_LINE_CHAR, "") for line in headers]
+    except FileNotFoundError:
+        return []
 
 
 def remove_chars(s: str) -> str:
