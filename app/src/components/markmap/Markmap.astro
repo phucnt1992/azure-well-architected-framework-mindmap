@@ -1,0 +1,39 @@
+<!-- Config Markmap before loading package -->
+<script is:inline>
+  // Extend the Window interface to declare 'markmap'
+  window.markmap = {
+    /** @type AutoLoaderOptions */
+    autoLoader: {
+      toolbar: true, // Enable toolbar
+    },
+  };
+
+  // Markmap dark if page theme is dark-mode on html data-theme="dark"
+  if (
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("markmap-dark");
+  }
+</script>
+
+<!-- Load Markmap AutoLoader -->
+<script
+  is:inline
+  data-astro-rerun
+  src="https://cdn.jsdelivr.net/npm/markmap-autoloader@latest"></script>
+
+<style is:inline>
+  .markmap {
+    position: relative;
+  }
+
+  .markmap > svg {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .mm-toolbar {
+  }
+</style>

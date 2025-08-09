@@ -19,5 +19,6 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "phucnt1992",
     "projectKey": "phucnt1992_azure-well-architected-framework-mindmap"
-  }
+  },
+  "python-envs.pythonProjects": []
 }

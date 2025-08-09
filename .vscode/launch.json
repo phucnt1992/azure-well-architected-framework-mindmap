@@ -14,6 +14,12 @@
       "args": [
         "docs"
       ]
+    },
+    {
+      "command": "./app/node_modules/.bin/astro dev",
+      "name": "Development server",
+      "request": "launch",
+      "type": "node-terminal"
     }
   ]
 }

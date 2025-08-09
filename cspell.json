@@ -7,7 +7,7 @@
     ".nvim"
   ],
   "words": [
-    "nvim",
+    "astrojs",
     "cmds",
     "deinit",
     "devcontainer",
@@ -17,6 +17,7 @@
     "markdownlint",
     "markmap",
     "mindmap",
+    "nvim",
     "Phuc",
     "pycache",
     "pytest",
@@ -28,6 +29,7 @@
     "typer",
     "usefixtures",
     "venv",
+    "webp",
     "xmlcharrefreplace"
   ]
 }
