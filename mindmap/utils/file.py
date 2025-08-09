@@ -34,7 +34,11 @@ def read_md_file(md_file: str) -> list[str]:
         with open(md_file, "r") as file:
             lines = file.readlines()
 
-        headers = filter(lambda line: line.startswith("#"), lines)
+        headers = filter(
+            lambda line: line.startswith("#")
+            and "customer intent:" not in line.lower(),
+            lines,
+        )
 
         return [line.replace(NEW_LINE_CHAR, "") for line in headers]
     except FileNotFoundError:
