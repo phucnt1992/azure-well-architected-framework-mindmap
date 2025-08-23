@@ -1,0 +1,17 @@
+---
+import Default from "@astrojs/starlight/components/Footer.astro";
+
+const currentYear = new Date().getFullYear();
+---
+
+<Default><slot /></Default>
+
+<footer>
+  <p>
+    &copy; <span id="footer-year">{currentYear}</span> - All rights reserved.
+  </p>
+</footer>
+
+<script is:inline data-astro-rerun>
+  document.getElementById("footer-year").innerText = new Date().getFullYear();
+</script>
