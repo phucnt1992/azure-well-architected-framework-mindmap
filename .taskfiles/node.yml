@@ -31,7 +31,13 @@ tasks:
         --ignore azure-docs \
         --ignore app \
         --ignore tests .
+
   run:
     desc: Generate the output
     cmds:
       - npx --yes markmap-cli ./output/*.md -o ./output/index.html
+
+  clean:
+    desc: Clean all node_modules directories
+    cmds:
+      - rm -rf **/node_modules
