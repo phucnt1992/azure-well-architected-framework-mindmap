@@ -21,8 +21,5 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "phucnt1992",
     "projectKey": "phucnt1992_azure-well-architected-framework-mindmap"
-  },
-  "yaml.schemas": {
-    "https://taskfile.dev/schema.json": "${workspaceFolder}/.taskfiles/*.*"
   }
 }
