@@ -1,6 +1,4 @@
-# yml-language-server: $schema=https://json.schemastore.org/taskfile
-# https://taskfile.devversion:
-
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 vars:

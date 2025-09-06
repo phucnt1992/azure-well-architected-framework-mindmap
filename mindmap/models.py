@@ -27,7 +27,9 @@ class Item:
         self.root_dir = root_dir
         self.children = []
 
-        if parent is not None:
+        if parent is None:
+            self.parent = None
+        else:
             self.parent = parent
             self.parent.add_child(self)
 

@@ -1,14 +1,24 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 tasks:
   init:
     desc: Initialize node modules
+    deps:
+      - workspace:init
+      - app:init
+
+  workspace:init:
+    desc: Initialize workspace dependencies
     cmds:
-      - echo "Installing workspace dependencies..."
       - npm i
       - npm run prepare
-      - echo "Installing app dependencies..."
-      - cd app && npm i
+
+  app:init:
+    desc: Initialize app dependencies
+    dir: app
+    cmds:
+      - npm i
 
   lint:
     desc: Run the linter

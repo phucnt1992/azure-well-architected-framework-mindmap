@@ -2,4 +2,4 @@
 task lint
 
 # format python files
-git diff --name-only --cached | xargs ls -1 2>/dev/null | grep '\.py$' | xargs -r black
+git diff --name-only --cached | xargs ls -1 2>/dev/null | grep '\.py$' | xargs -r ./.venv/bin/black
