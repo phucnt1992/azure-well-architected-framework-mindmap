@@ -1,6 +1,6 @@
 {
   "name": "Azure Well-Architected Framework Mind Map",
-  "image": "mcr.microsoft.com/vscode/devcontainers/base:jammy",
+  "dockerFile": "./Dockerfile",
   "features": {
     "ghcr.io/devcontainers/features/git": {
       "ppa": true
@@ -13,6 +13,7 @@
       "version": "lts"
     },
     "ghcr.io/audacioustux/devcontainers/taskfile": {},
+    "ghcr.io/devcontainers-extra/features/fzf": {},
     "ghcr.io/devcontainers/features/java": {
       "version": "latest",
       "jdkDistro": "ms"
@@ -42,7 +43,8 @@
         "ms-azuretools.vscode-containers",
         "docker.docker",
         "eamodio.gitlens",
-        "unifiedjs.vscode-mdx"
+        "unifiedjs.vscode-mdx",
+        "TomRijndorp.find-it-faster"
       ]
     }
   }
