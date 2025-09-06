@@ -1,24 +1,7 @@
 {
   "name": "Azure Well-Architected Framework Mind Map",
   "dockerFile": "./Dockerfile",
-  "features": {
-    "ghcr.io/devcontainers/features/git": {
-      "ppa": true
-    },
-    "ghcr.io/devcontainers/features/python": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/node": {
-      "nodeGypDependencies": true,
-      "version": "lts"
-    },
-    "ghcr.io/audacioustux/devcontainers/taskfile": {},
-    "ghcr.io/devcontainers-extra/features/fzf": {},
-    "ghcr.io/devcontainers/features/java": {
-      "version": "latest",
-      "jdkDistro": "ms"
-    }
-  },
+  "remoteUser": "vscode",
   "postCreateCommand": "task init",
   "customizations": {
     "vscode": {
