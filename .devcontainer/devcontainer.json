@@ -14,7 +14,8 @@
     },
     "ghcr.io/audacioustux/devcontainers/taskfile": {},
     "ghcr.io/devcontainers/features/java": {
-      "version": "17"
+      "version": "latest",
+      "jdkDistro": "ms"
     }
   },
   "postCreateCommand": "task init",
@@ -36,7 +37,12 @@
         "ms-python.isort",
         "vitest.explorer",
         "mike-co.import-sorter",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "astro-build.astro-vscode",
+        "ms-azuretools.vscode-containers",
+        "docker.docker",
+        "eamodio.gitlens",
+        "unifiedjs.vscode-mdx"
       ]
     }
   }

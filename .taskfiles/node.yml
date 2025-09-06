@@ -4,8 +4,11 @@ tasks:
   init:
     desc: Initialize node modules
     cmds:
+      - echo "Installing workspace dependencies..."
       - npm i
       - npm run prepare
+      - echo "Installing app dependencies..."
+      - cd app && npm i
 
   lint:
     desc: Run the linter

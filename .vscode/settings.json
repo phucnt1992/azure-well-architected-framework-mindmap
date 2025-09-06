@@ -1,24 +1,25 @@
 {
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
     "**/__pycache__": true,
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
     "**/.pytest_cache": true,
+    "**/.svn": true,
+    "**/CVS": true,
     "**/node_modules": true,
+    "**/Thumbs.db": true
   },
+  "python-envs.pythonProjects": [],
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
   "python.testing.pytestArgs": [
     "tests",
     "-vv"
   ],
-  "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
   "sonarlint.connectedMode.project": {
     "connectionId": "phucnt1992",
     "projectKey": "phucnt1992_azure-well-architected-framework-mindmap"
-  },
-  "python-envs.pythonProjects": []
+  }
 }
