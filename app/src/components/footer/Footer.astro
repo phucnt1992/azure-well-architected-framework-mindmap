@@ -8,10 +8,18 @@ const currentYear = new Date().getFullYear();
 
 <footer>
   <p>
-    &copy; <span id="footer-year">{currentYear}</span> - All rights reserved.
+    Copyrights &copy; <span id="footer-year">{currentYear}</span> - All Rights Reserved.
   </p>
 </footer>
 
 <script is:inline data-astro-rerun>
   document.getElementById("footer-year").innerText = new Date().getFullYear();
 </script>
+
+<style>
+  @layer starlight.core {
+    footer {
+      text-align: center;
+    }
+  }
+</style>

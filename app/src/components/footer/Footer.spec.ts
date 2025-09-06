@@ -1,5 +1,5 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Footer from './Footer.astro';
 
 describe('Footer component', () => {
@@ -25,6 +25,6 @@ describe('Footer component', () => {
 
     // Assert
     expect(result).toContain(currentYear);
-    expect(result).toContain('All rights reserved.');
+    expect(result).toContain('All Rights Reserved.');
   })
 });

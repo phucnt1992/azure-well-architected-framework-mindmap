@@ -23,6 +23,9 @@ export default defineConfig({
         autogenerate: { directory: 'azure' },
       },
     ],
+    components: {
+      Footer: './src/components/Footer/Footer.astro'
+    }
   })],
   markdown: {
     remarkPlugins: [remarkDiagram],
