@@ -23,6 +23,7 @@
     "pycache",
     "pytest",
     "pyyaml",
+    "rootdir",
     "sonarcloud",
     "sonarsource",
     "Taskfile",
