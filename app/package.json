@@ -18,5 +18,6 @@
   },
   "devDependencies": {
     "jsdom": "^26.1.0"
-  }
+  },
+  "packageManager": "pnpm@10.15.1"
 }

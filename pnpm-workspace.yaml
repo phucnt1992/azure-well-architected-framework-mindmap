@@ -1,0 +1,3 @@
+packages:
+  - app
+  # add other workspace package folders here if/when created (e.g. packages/*)

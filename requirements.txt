@@ -1,8 +1,0 @@
-# deps
-flake8
-black
-pytest
-pytest-cov
-isort
-typer
-pyyaml

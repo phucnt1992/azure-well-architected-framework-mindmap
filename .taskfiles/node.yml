@@ -11,20 +11,20 @@ tasks:
   workspace:init:
     desc: Initialize workspace dependencies
     cmds:
-      - npm i
-      - npm run prepare
+      - pnpm i
+      - pnpm run prepare
 
   app:init:
     desc: Initialize app dependencies
     dir: app
     cmds:
-      - npm i
+      - pnpm i
 
   lint:
     desc: Run the linter
     cmds:
       - |
-        npx markdownlint-cli \
+        pnpx markdownlint-cli \
         --ignore node_modules \
         --ignore well-architected \
         --ignore output \
@@ -35,7 +35,7 @@ tasks:
   run:
     desc: Generate the output
     cmds:
-      - npx --yes markmap-cli ./output/*.md -o ./output/index.html
+      - pnpx markmap-cli output/*.md -o output/index.html --offline --no-open
 
   clean:
     desc: Clean all node_modules directories
