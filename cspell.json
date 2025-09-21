@@ -9,6 +9,7 @@
   "words": [
     "astrojs",
     "cmds",
+    "commitlint",
     "deinit",
     "devcontainer",
     "doctest",

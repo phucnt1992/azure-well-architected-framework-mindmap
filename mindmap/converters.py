@@ -17,8 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class MindMapConverter:
-    root_dir: str
-    root_uri: str
+    __root_dir: str
+    __root_uri: str
 
     def __init__(self, root_dir: str = "/", root_uri: str = "/"):
         self.__root_dir = root_dir
@@ -48,7 +48,7 @@ class MindMapConverter:
 
     def __is_non_markdown_href(self, item: Item) -> bool:
         return (
-            item.href is None
+            not item.href
             or item.href.startswith("http")
             or item.href.endswith(".yml")
             or item.href.endswith(".yaml")
@@ -105,7 +105,7 @@ class MindMapConverter:
                 text.write(NEW_LINE_CHAR)
 
     def __to_mindmap_recursive(
-        self, item: dict, text: StringIO, level: int, max_level: int
+        self, item: Item, text: StringIO, level: int, max_level: int
     ) -> StringIO:
         # Only convert the level less than the max level
         if max_level >= 0 and level >= max_level:
@@ -128,6 +128,9 @@ class MindMapConverter:
         """
         logger.debug("Start converting table of content to mindmap.")
         with StringIO() as text:
+            if toc.root_item is None:
+                raise ValueError("Table of content is empty.")
+
             content = self.__to_mindmap_recursive(toc.root_item, text, 0, max_level)
             # Remove the last newline
             result = content.getvalue()[::-1].replace(NEW_LINE_CHAR, "", 1)[::-1]

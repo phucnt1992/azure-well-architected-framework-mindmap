@@ -6,7 +6,7 @@ NEW_LINE_CHAR = "\n"
 
 
 def scan_toc_files(
-    path: str, file_name: str = "toc.yml", exclude_dir: str = None
+    path: str, file_name: str = "toc.yml", exclude_dir: str | None = None
 ) -> list[str]:
     """Load all files in the given path and file name."""
     index_files = []
@@ -45,7 +45,7 @@ def read_md_file(md_file: str) -> list[str]:
         return []
 
 
-def write_md_file(content: str, file: str, meta: str = None) -> str:
+def write_md_file(content: str, file: str, meta: str | None = None) -> None:
     """Write the content to a markdown file."""
     os.makedirs(os.path.dirname(file), exist_ok=True)
 

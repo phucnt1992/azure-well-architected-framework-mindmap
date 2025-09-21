@@ -6,28 +6,29 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "astro-build.astro-vscode",
         "DavidAnson.vscode-markdownlint",
+        "docker.docker",
+        "eamodio.gitlens",
         "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
         "gera2ld.markmap-vscode",
         "GitHub.vscode-github-actions",
         "hbenl.vscode-test-explorer",
+        "mike-co.import-sorter",
+        "ms-azuretools.vscode-containers",
         "ms-python.black-formatter",
         "ms-python.flake8",
+        "ms-python.isort",
         "ms-python.python",
-        "streetsidesoftware.code-spell-checker",
-        "task.vscode-task",
         "redhat.vscode-yaml",
         "SonarSource.sonarlint-vscode",
-        "ms-python.isort",
-        "vitest.explorer",
-        "mike-co.import-sorter",
-        "esbenp.prettier-vscode",
-        "astro-build.astro-vscode",
-        "ms-azuretools.vscode-containers",
-        "docker.docker",
-        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker",
+        "tamasfe.even-better-toml",
+        "task.vscode-task",
+        "TomRijndorp.find-it-faster",
         "unifiedjs.vscode-mdx",
-        "TomRijndorp.find-it-faster"
+        "vitest.explorer"
       ]
     }
   }
