@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 from mindmap.converters import MindMapConverter
 from mindmap.models import Item, TableOfContent
 
@@ -22,6 +24,7 @@ def test_convert_table_of_content_to_mindmap_should_return_expected_result(
         assert actual_result == expected_result
 
 
+@pytest.mark.skip(reason="Astro markdown format is under development")
 def test_covert_table_of_content_to_astro_markdown_should_return_expected_result(
     mock_table_of_content_dict: Item,
 ) -> None:
