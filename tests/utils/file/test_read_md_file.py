@@ -3,7 +3,7 @@ import os
 from mindmap.utils.file import read_md_file
 
 
-def test_read_md_file_should_extract_headers_nodes(fixture_dir):
+def test_read_md_file_should_extract_headers_nodes(fixture_dir: str):
     # Arrange
     test_readme_file = os.path.join(fixture_dir, "test_readme.md")
 
@@ -11,7 +11,9 @@ def test_read_md_file_should_extract_headers_nodes(fixture_dir):
     actual_result = read_md_file(test_readme_file)
 
     # Assert
-    assert actual_result == [
+    assert actual_result is not None
+    assert len(actual_result.headers) == 9
+    assert actual_result.headers == [
         "# Main Title",
         "## Header 1",
         "### Header 1.1",

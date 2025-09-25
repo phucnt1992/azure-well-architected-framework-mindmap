@@ -2,8 +2,8 @@ INDENT_SIZE = 2
 
 
 def remove_chars(s: str) -> str:
-    chars_to_remove = "'?():"
-    table = str.maketrans("", "", chars_to_remove)
+    chars_to_remove_str = "'?():"
+    table = str.maketrans("", "", chars_to_remove_str)
     return s.translate(table)
 
 
